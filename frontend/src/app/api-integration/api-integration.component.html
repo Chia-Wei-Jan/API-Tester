@@ -1,0 +1,18 @@
+<div>
+    <div *ngFor="let api of apis; let i = index" class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <app-add-api-form [api]="api" [index]="i" (remove)="removeApi($event)"></app-add-api-form>
+      </div>
+    </div>
+    <div class="text-center mb-4">
+      <button class="btn btn-primary mr-2" (click)="addApi()">Add API</button>
+      <button class="btn btn-success" (click)="runTests()">Run</button>
+    </div>
+    <div *ngFor="let response of responses" class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">API {{ responses.indexOf(response) + 1 }} Response:</h5>
+        <pre>{{ response | json }}</pre>
+      </div>
+    </div>
+  </div>
+  
