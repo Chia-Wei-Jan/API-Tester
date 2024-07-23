@@ -5,7 +5,7 @@
           <option *ngFor="let method of methods" [value]="method">{{method}}</option>
         </select>
       </div>
-      <input type="text" class="form-control" [(ngModel)]="api.url" placeholder="https://example.com">
+      <input type="text" class="form-control" [(ngModel)]="api.url" placeholder="Enter URL">
       <div class="input-group-append">
         <button class="btn btn-primary" (click)="sendRequest()">Send</button>
       </div>
@@ -19,7 +19,13 @@
         <a class="nav-link" id="headers-tab" data-toggle="tab" href="#headers-{{index}}" role="tab" aria-controls="headers" aria-selected="false">Headers</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="json-tab" data-toggle="tab" href="#json-{{index}}" role="tab" aria-controls="json" aria-selected="false">JSON</a>
+        <a class="nav-link" id="json-tab" data-toggle="tab" href="#json-{{index}}" role="tab" aria-controls="json" aria-selected="false">JSON Body</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="xml-tab" data-toggle="tab" href="#xml-{{index}}" role="tab" aria-controls="xml" aria-selected="false">XML Body</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="chain-tab" data-toggle="tab" href="#chain-{{index}}" role="tab" aria-controls="chain" aria-selected="false">Chain Params</a>
       </li>
     </ul>
     <div class="tab-content" id="apiTabsContent">
@@ -52,12 +58,31 @@
       <div class="tab-pane fade" id="json-{{index}}" role="tabpanel" aria-labelledby="json-tab">
         <div class="form-group mt-2">
           <label>JSON Body</label>
-          <textarea class="form-control" [(ngModel)]="api.body" rows="5" placeholder='{"key":"value"}'></textarea>
+          <textarea class="form-control" [(ngModel)]="api.jsonBody" rows="5" placeholder='{"key":"value"}'></textarea>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="xml-{{index}}" role="tabpanel" aria-labelledby="xml-tab">
+        <div class="form-group mt-2">
+          <label>XML Body</label>
+          <textarea class="form-control" [(ngModel)]="api.xmlBody" rows="5" placeholder="<key>value</key>"></textarea>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="chain-{{index}}" role="tabpanel" aria-labelledby="chain-tab">
+        <div class="form-group mt-2">
+            <label>Chain Parameters</label>
+            <button class="btn btn-outline-secondary btn-sm mb-2" (click)="addChainParam()">Add</button>
+            <div *ngFor="let chainParam of api.chainParams; let i = index" class="input-group mb-2">
+                <input type="text" class="form-control" [(ngModel)]="chainParam.key" placeholder="Key">
+                <input type="text" class="form-control" [(ngModel)]="chainParam.sourceKey" placeholder="Source Key">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-danger" (click)="removeChainParam(i)">Remove</button>
+                </div>
+            </div>
         </div>
       </div>
     </div>
     <div class="text-right mt-2">
       <button class="btn btn-danger" (click)="removeApi()">Remove</button>
     </div>
-  </div>
+</div>
   

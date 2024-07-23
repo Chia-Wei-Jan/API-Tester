@@ -1,18 +1,27 @@
 <div>
-    <div *ngFor="let api of apis; let i = index" class="card mb-3 shadow-sm">
-      <div class="card-body">
-        <app-add-api-form [api]="api" [index]="i" (remove)="removeApi($event)"></app-add-api-form>
-      </div>
+    <div *ngFor="let api of apis; let i = index" class="card mb-3">
+        <div class="card-body">
+            <app-add-api-form [api]="api" [index]="i" (remove)="removeApi($event)"></app-add-api-form>
+        </div>
     </div>
-    <div class="text-center mb-4">
-      <button class="btn btn-primary mr-2" (click)="addApi()">Add API</button>
-      <button class="btn btn-success" (click)="runTests()">Run</button>
+    <div class=""text-center mb-4>
+        <button class="btn btn-primary mr-2" (click)="addApi()">Add API</button>
+        <button class="btn btn-success" (click)="runTests()">Run</button>
     </div>
-    <div *ngFor="let response of responses" class="card mb-3 shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">API {{ responses.indexOf(response) + 1 }} Response:</h5>
-        <pre>{{ response | json }}</pre>
-      </div>
+    <div *ngFor="let response of responses; let i = index" class="card mb-3 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">API {{ i + 1 }} Response:</h5>
+            <p><strong>Status Code: </strong> <span class="badge badge-info">{{ response.status_code }}</span></p>
+            <h6>Response Body:</h6>
+            <div *ngIf="response.content_type.includes('application/json')">
+                <pre class="bg-light p-3 rounded">{{ response.body | json }}</pre>
+            </div>
+            <div *ngIf="response.content_type.includes('application/xml') || response.content_type.includes('text/xml')">
+                <pre class="bg-light p-3 rounded">{{ response.body }}</pre>
+            </div>
+            <div *ngIf="!response.content_type.includes('application/json') && !response.content_type.includes('application/xml') && !response.content_type.includes('text/xml')">
+                <pre class="bg-light p-3 rounded">{{ response.body }}</pre>
+            </div>
+        </div>
     </div>
-  </div>
-  
+</div>
